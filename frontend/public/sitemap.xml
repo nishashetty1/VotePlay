@@ -2,49 +2,49 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <!-- Home Page -->
   <url>
-    <loc>https://yourwebsite.com/</loc>
+    <loc>https://voteplay.tech/</loc>
     <priority>1.0</priority>
   </url>
 
   <!-- Login Page -->
   <url>
-    <loc>https://yourwebsite.com/login</loc>
+    <loc>https://voteplay.tech/login</loc>
     <priority>0.8</priority>
   </url>
 
   <!-- Sign Up Page -->
   <url>
-    <loc>https://yourwebsite.com/signup</loc>
+    <loc>https://voteplay.tech/signup</loc>
     <priority>0.8</priority>
   </url>
 
   <!-- Video Page (Protected) -->
   <url>
-    <loc>https://yourwebsite.com/video</loc>
+    <loc>https://voteplay.tech/video</loc>
     <priority>0.8</priority>
   </url>
 
   <!-- Dashboard Page (Protected) -->
   <url>
-    <loc>https://yourwebsite.com/dashboard</loc>
+    <loc>https://voteplay.tech/dashboard</loc>
     <priority>1.0</priority>
   </url>
 
   <!-- Vote Now Page (Protected) -->
   <url>
-    <loc>https://yourwebsite.com/votenow</loc>
+    <loc>https://voteplay.tech/votenow</loc>
     <priority>1.0</priority>
   </url>
 
   <!-- Thank You Page (Protected) -->
   <url>
-    <loc>https://yourwebsite.com/thank-you</loc>
+    <loc>https://voteplay.tech/thank-you</loc>
     <priority>0.6</priority>
   </url>
 
   <!-- Not Found Page -->
   <url>
-    <loc>https://yourwebsite.com/404</loc>
+    <loc>https://voteplay.tech/404</loc>
     <priority>0.2</priority>
   </url>
 </urlset>

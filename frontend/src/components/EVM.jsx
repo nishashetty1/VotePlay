@@ -43,7 +43,7 @@ const EVM = () => {
         }
 
         const teamResponse = await fetch(
-          `http://localhost:5000/api/teams/${team._id}/vote`,
+          `https://voteplay-backend.onrender.com/api/teams/${team._id}/vote`,
           {
             method: "PUT",
             headers: {
@@ -65,7 +65,7 @@ const EVM = () => {
         const updatedTeam = await teamResponse.json();
 
         const userResponse = await fetch(
-          "http://localhost:5000/api/user/vote",
+          "https://voteplay-backend.onrender.com/api/user/vote",
           {
             method: "PUT",
             headers: {

@@ -198,7 +198,7 @@ const Dashboard = () => {
         throw new Error("User name is required for certificate generation");
       }
       const response = await fetch(
-        "http://localhost:5000/api/generate-certificate",
+        "https://voteplay-backend.onrender.com/api/generate-certificate",
         {
           method: "POST",
           headers: {

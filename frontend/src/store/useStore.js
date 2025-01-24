@@ -10,7 +10,7 @@ import {
 } from "../utils/auth";
 import { validateImageFile, createFormData } from "../utils/imageUtils";
 
-const API_BASE_URL = "http://localhost:5000/api";
+const API_BASE_URL = "https://voteplay-backend.onrender.com/api";
 
 export const useStore = create((set, get) => ({
   // State

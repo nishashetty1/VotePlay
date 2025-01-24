@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { getAuthToken } from "../utils/auth";
 
-const API_BASE_URL = "http://localhost:5000/api";
+const API_BASE_URL = "https://voteplay-backend.onrender.com/api";
 
 export const usePaymentStore = create((set) => ({
   votecoins: 0,
