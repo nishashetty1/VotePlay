@@ -72,19 +72,28 @@ const Dashboard = () => {
 
       // Initialize Cashfree
       const cashfree = new window.Cashfree({
-        mode: "sandbox",
+        mode: "production",
       });
 
       const checkoutOptions = {
         paymentSessionId: orderData.payment_session_id,
         redirectTarget: "_self",
         style: {
-          backgroundColor: "#528FF0",
-          color: "#ffffff",
-          fontFamily: "Arial",
+          backgroundColor: "#1E2328",
+          color: "#F3F4F6",
+          fontFamily: "Poppins, sans-serif",
           fontSize: "16px",
-          errorColor: "#ff0000",
-          theme: "light",
+          errorColor: "#D04848",
+          theme: "dark",
+          input: {
+            backgroundColor: "#161A1D",
+            color: "#F3F4F6",
+            borderColor: "#6895D2",
+          },
+          button: {
+            backgroundColor: "#D04848",
+            color: "#F3F4F6",
+          }
         },
       };
 
