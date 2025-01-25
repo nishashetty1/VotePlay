@@ -44,6 +44,10 @@ const Video = () => {
     })
   }
 
+  const skipAndProceed = () => {
+      window.location.href = '/dashboard'
+  }
+
   const startVideoHandler = () => {
     handleTransition(() => {
       setStartVideo(true)
@@ -56,7 +60,7 @@ const Video = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.3, ease: "easeOut" }}
-        className='fixed inset-0 z-50 bg-background-darker/80 flex items-center justify-center'
+        className="fixed inset-0 z-50 min-h-screen bg-gradient-to-b from-background-dark to-background-darker px-4 sm:px-6 lg:px-8 py-8 flex items-center justify-center"
       >
         <div className="absolute inset-0 bg-[url('/assets/background.webp')] opacity-10 bg-center bg-contain" />
         <motion.div
@@ -179,7 +183,7 @@ const Video = () => {
         <div className="absolute inset-0 bg-[url('/assets/background.webp')] opacity-10 bg-center bg-contain" />
 
         <video
-          onEnded={goToDashboard}
+          onEnded={skipAndProceed}
           src='./assets/eci_video.mp4'
           autoPlay
           muted={false}
@@ -212,7 +216,7 @@ const Video = () => {
             animate={{ opacity: 1, y: 0 }}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            onClick={goToDashboard}
+            onClick={skipAndProceed}
             className='mt-4 sm:mt-0 relative group'
           >
             <div className='relative px-6 sm:px-8 py-3 bg-primary hover:bg-primary-dark hover:shadow-lg hover:shadow-primary/20 rounded-full text-text-primary font-medium transition-all duration-300 transform hover:-translate-y-0.5 flex items-center gap-2'>
