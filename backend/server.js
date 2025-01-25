@@ -13,10 +13,22 @@ dotenv.config();
 
 const app = express();
 
-// Middleware
+const allowedOrigins = [
+  'https://voteplay.tech',
+  'https://www.voteplay.tech',
+  'https://voteplay-frontend.onrender.com'
+];
+
+// Middleware for handling CORS
 app.use(
   cors({
-    origin: "https://voteplay-frontend.onrender.com/",
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
