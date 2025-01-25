@@ -11,6 +11,7 @@ const EVM = () => {
   const setTeams = useStore((state) => state.setTeams);
   const votedTeam = useStore((state) => state.votedTeam);
   const setVotedTeam = useStore((state) => state.setVotedTeam);
+  const audioRef = useRef(new Audio("/assets/sound/ipl_tune.mp3"));
 
   const navigate = useNavigate();
 
@@ -43,7 +44,7 @@ const EVM = () => {
         }
 
         const teamResponse = await fetch(
-          `https://voteplay-backend.onrender.com/api/teams/${team._id}/vote`,
+          `${import.meta.env.VITE_API_BASE_URL}/teams/${team._id}/vote`,
           {
             method: "PUT",
             headers: {
@@ -65,7 +66,7 @@ const EVM = () => {
         const updatedTeam = await teamResponse.json();
 
         const userResponse = await fetch(
-          "https://voteplay-backend.onrender.com/api/user/vote",
+          `${import.meta.env.VITE_API_BASE_URL}/user/vote`,
           {
             method: "PUT",
             headers: {
@@ -99,7 +100,12 @@ const EVM = () => {
           { delay: 1000, action: () => playAudio(rollRef) },
           { delay: 8000, action: () => playAudio(beepRef) },
           { delay: 10000, action: () => setVotedTeam(null) },
-          { delay: 13000, action: () => navigate("/thank-you") },
+          { delay: 13000, action: () => {
+            audioRef.current.play();
+            setTimeout(() => {
+              navigate("/thank-you", { replace: true });
+            }, 4000);
+          } },
         ];
 
         animations.forEach(({ delay, action }) => {

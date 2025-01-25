@@ -1,8 +1,6 @@
 import { create } from "zustand";
 import { getAuthToken } from "../utils/auth";
 
-const API_BASE_URL = "https://voteplay-backend.onrender.com/api";
-
 export const usePaymentStore = create((set) => ({
   votecoins: 0,
   isLoading: false,
@@ -13,7 +11,7 @@ export const usePaymentStore = create((set) => ({
     if (!token) return false;
 
     try {
-      const response = await fetch(`${API_BASE_URL}/user/votecoins`, {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/user/votecoins`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -24,9 +22,13 @@ export const usePaymentStore = create((set) => ({
       const data = await response.json();
       if (!response.ok) throw new Error(data.message);
 
-      set({ votecoins: data.votecoins });
-      return true;
+      if (data.success) {
+        set({ votecoins: data.votecoins });
+        return true;
+      }
+      return false;
     } catch (error) {
+      console.error("Error fetching votecoins:", error);
       return false;
     }
   },
@@ -36,7 +38,7 @@ export const usePaymentStore = create((set) => ({
     if (!token) return false;
 
     try {
-      const response = await fetch(`${API_BASE_URL}/user/votecoins`, {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/user/votecoins`, {
         method: "PUT",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -51,37 +53,46 @@ export const usePaymentStore = create((set) => ({
       const data = await response.json();
       if (!response.ok) throw new Error(data.message);
 
-      set({ votecoins: data.votecoins });
-      return true;
+      if (data.success) {
+        set({ votecoins: data.votecoins });
+        return true;
+      }
+      return false;
     } catch (error) {
+      console.error("Error updating votecoins:", error);
       return false;
     }
   },
 
   initiatePayment: async (selectedPackage) => {
     if (!selectedPackage) return false;
-
+  
     try {
-      const response = await fetch(`${API_BASE_URL}/create-order`, {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/payment/create-order`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${getAuthToken()}`,
         },
         body: JSON.stringify({
-          amount: selectedPackage.amount * 100,
+          amount: selectedPackage.amount,
+          credits: selectedPackage.credits
         }),
       });
-
-      if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.message || "Failed to create order");
+  
+      const data = await response.json();
+      if (!response.ok || !data.success) {
+        throw new Error(data.message || "Failed to create order");
       }
-
-      const orderData = await response.json();
-      return orderData;
+  
+      return {
+        ...data,
+        credits: selectedPackage.credits
+      };
     } catch (error) {
+      console.error("Payment initiation error:", error);
       return false;
     }
   },
+  
 }));

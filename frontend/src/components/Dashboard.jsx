@@ -15,7 +15,6 @@ import { useNavigate } from "react-router-dom";
 import { useStore } from "../store/useStore";
 import { usePaymentStore } from "../store/paymentStore";
 import { useStatsStore } from "../store/statsStore";
-import { getAuthToken } from "../utils/auth";
 
 let userdigit;
 const generateRandomDigits = () => {
@@ -32,11 +31,12 @@ const Dashboard = () => {
   const [isUploading, setIsUploading] = useState(false);
   const [showResults, setShowResults] = useState(false);
 
-  const { teams, setIsVoting, fetchUserImage } = useStore();
+  const { teams, fetchUserImage, setIsVoting } = useStore();
 
   const sortedTeams = [...teams].sort((a, b) => b.count - a.count);
   const { votecoins, fetchVotecoins, updateVotecoins } = usePaymentStore();
-  const { userVotes, totalVotes, registeredVoters, fetchStats } = useStatsStore();
+  const { userVotes, totalVotes, registeredVoters, fetchStats } =
+    useStatsStore();
 
   useEffect(() => {
     fetchVotecoins();
@@ -53,43 +53,46 @@ const Dashboard = () => {
     if (!selectedPackage) return;
 
     try {
+      console.log("Initiating payment for package:", selectedPackage);
       const orderData = await usePaymentStore
         .getState()
         .initiatePayment(selectedPackage);
-      if (!orderData) return;
 
-      const options = {
-        key: "rzp_test_D2V00W9hIBIH3c",
-        amount: selectedPackage.amount * 100,
-        currency: "INR",
-        name: "India Voting Simulator",
-        description: `Purchase ${selectedPackage.credits} Credits`,
-        order_id: orderData.id,
-        handler: async function (response) {
-          try {
-            await updateVotecoins(selectedPackage.credits, "add");
-            await fetchVotecoins();
-            setSelectedPackage(null);
-          } catch (error) {
-            console.error("Error updating votecoins:", error);
-          }
-        },
-        prefill: {
-          name: user?.name || "",
-          email: user?.email || "",
-        },
-        theme: {
-          color: "#528FF0",
+      if (!orderData) {
+        throw new Error("Failed to create order");
+      }
+
+      console.log("Order created:", orderData);
+
+      // Store credits in sessionStorage for retrieval after payment
+      sessionStorage.setItem(
+        "pending_credits",
+        selectedPackage.credits.toString()
+      );
+
+      // Initialize Cashfree
+      const cashfree = new window.Cashfree({
+        mode: "sandbox",
+      });
+
+      const checkoutOptions = {
+        paymentSessionId: orderData.payment_session_id,
+        redirectTarget: "_self",
+        style: {
+          backgroundColor: "#528FF0",
+          color: "#ffffff",
+          fontFamily: "Arial",
+          fontSize: "16px",
+          errorColor: "#ff0000",
+          theme: "light",
         },
       };
 
-      const rzp = new window.Razorpay(options);
-      rzp.on("payment.failed", function (response) {
-        console.error("Payment failed:", response.error);
-      });
-      rzp.open();
+      // Open Cashfree checkout
+      cashfree.checkout(checkoutOptions);
     } catch (error) {
       console.error("Payment initiation error:", error);
+      alert("Failed to initiate payment. Please try again.");
     }
   };
 
@@ -105,8 +108,15 @@ const Dashboard = () => {
       const success = await updateVotecoins(5, "subtract");
 
       if (success) {
-        setIsVoting(true);
-        navigate("/votenow");
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+        
+        setTimeout(() => {
+          setIsVoting(true);
+          navigate("/votenow");
+        }, 500);
       } else {
         alert("Failed to process vote credits. Please try again.");
       }
@@ -198,7 +208,7 @@ const Dashboard = () => {
         throw new Error("User name is required for certificate generation");
       }
       const response = await fetch(
-        "https://voteplay-backend.onrender.com/api/generate-certificate",
+        `${import.meta.env.VITE_API_BASE_URL}/generate-certificate`,
         {
           method: "POST",
           headers: {
@@ -222,7 +232,7 @@ const Dashboard = () => {
       const url = window.URL.createObjectURL(blob);
       const link = document.createElement("a");
       link.href = url;
-      link.download = `certificate-${user.name}-${Date.now()}.pdf`;
+      link.download = `VotePlay-Certificate-${user.name}.pdf`;
       document.body.appendChild(link);
       link.click();
       link.remove();
@@ -317,7 +327,7 @@ const Dashboard = () => {
                       <p className="absolute left-[49%] top-[65%]">
                         {user?.gender
                           ? user.gender.charAt(0).toUpperCase() +
-                          user.gender.slice(1)
+                            user.gender.slice(1)
                           : "Gender"}
                       </p>
                       <p className="absolute left-[56%] top-[78%]">
@@ -382,10 +392,11 @@ const Dashboard = () => {
                     <div
                       key={pkg.id}
                       onClick={() => setSelectedPackage(pkg)}
-                      className={`px-6 py-3 bg-background-darker rounded-lg border ${selectedPackage?.id === pkg.id
-                        ? "border-accent"
-                        : "border-secondary/20 hover:border-secondary/40"
-                        } transition-colors cursor-pointer`}
+                      className={`px-6 py-3 bg-background-darker rounded-lg border ${
+                        selectedPackage?.id === pkg.id
+                          ? "border-accent"
+                          : "border-secondary/20 hover:border-secondary/40"
+                      } transition-colors cursor-pointer`}
                     >
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-4">
@@ -415,10 +426,11 @@ const Dashboard = () => {
                   whileTap={{ scale: 0.98 }}
                   onClick={handlePayment}
                   disabled={!selectedPackage}
-                  className={`w-full px-6 py-3 rounded-full text-text-primary font-medium transition-all duration-300 flex items-center justify-center gap-2 ${selectedPackage
-                    ? "bg-secondary hover:bg-secondary-dark"
-                    : "bg-secondary/50 cursor-not-allowed"
-                    }`}
+                  className={`w-full px-6 py-3 rounded-full text-text-primary font-medium transition-all duration-300 flex items-center justify-center gap-2 ${
+                    selectedPackage
+                      ? "bg-secondary hover:bg-secondary-dark"
+                      : "bg-secondary/50 cursor-not-allowed"
+                  }`}
                 >
                   <Coins className="w-5 h-5" />
                   Buy More VoteCoins
@@ -471,8 +483,8 @@ const Dashboard = () => {
               {isLoadingResults
                 ? "Loading..."
                 : showResults
-                  ? "Hide Results"
-                  : "Show Results"}
+                ? "Hide Results"
+                : "Show Results"}
               {!showResults && votecoins < 10 && (
                 <span className="ml-2 text-xs sm:text-sm opacity-75 cursor-not-allowed whitespace-nowrap">
                   (Need {10 - votecoins} more VoteCoins)
@@ -533,8 +545,9 @@ const Dashboard = () => {
                         <img
                           src={team.logo}
                           alt={team.name}
-                          className={`w-24 h-24 object-contain ${team.team === "NOTA" ? "filter invert" : ""
-                            }`}
+                          className={`w-24 h-24 object-contain ${
+                            team.team === "NOTA" ? "filter invert" : ""
+                          }`}
                         />
                         <h4 className="text-lg font-bold text-text-primary">
                           {team.name}
@@ -564,8 +577,9 @@ const Dashboard = () => {
                         <img
                           src={team.logo}
                           alt={team.name}
-                          className={`w-10 h-10 object-contain ${team.team === "NOTA" ? "filter invert" : ""
-                            }`}
+                          className={`w-10 h-10 object-contain ${
+                            team.team === "NOTA" ? "filter invert" : ""
+                          }`}
                         />
                         <div>
                           <h4 className="text-sm font-medium text-text-primary">

@@ -10,8 +10,6 @@ import {
 } from "../utils/auth";
 import { validateImageFile, createFormData } from "../utils/imageUtils";
 
-const API_BASE_URL = "https://voteplay-backend.onrender.com/api";
-
 export const useStore = create((set, get) => ({
   // State
   teams: [],
@@ -35,6 +33,8 @@ export const useStore = create((set, get) => ({
   setVerificationAttempts: (value) => set({ verificationAttempts: value }),
   setTempUserData: (data) => set({ tempUserData: data }),
   setIsVoting: (value) => set({ isVoting: value }),
+  
+  setAudio: (audio) => set({ audio }),
 
   // Reset states
   resetAuthStates: () =>
@@ -49,7 +49,7 @@ export const useStore = create((set, get) => ({
   // API calls
   fetchTeams: async () => {
     try {
-      const response = await axios.get(`${API_BASE_URL}/teams`);
+      const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/teams`);
       set({ teams: response.data });
       return true;
     } catch (error) {
@@ -62,7 +62,7 @@ export const useStore = create((set, get) => ({
     set({ isLoading: true, error: null });
     try {
       const checkEmailResponse = await axios.post(
-        `${API_BASE_URL}/check-user`,
+        `${import.meta.env.VITE_API_BASE_URL}/check-user`,
         { email: userData.email },
         {
           withCredentials: true,
@@ -81,7 +81,7 @@ export const useStore = create((set, get) => ({
       }
 
       const response = await axios.post(
-        `${API_BASE_URL}/request-otp`,
+        `${import.meta.env.VITE_API_BASE_URL}/request-otp`,
         {
           email: userData.email,
           userData: userData,
@@ -132,7 +132,7 @@ export const useStore = create((set, get) => ({
 
     try {
       const response = await axios.post(
-        `${API_BASE_URL}/verify-otp`,
+        `${import.meta.env.VITE_API_BASE_URL}/verify-otp`,
         { email, otp },
         {
           headers: {
@@ -201,7 +201,7 @@ export const useStore = create((set, get) => ({
 
     try {
       const response = await axios.post(
-        `${API_BASE_URL}/request-otp`,
+        `${import.meta.env.VITE_API_BASE_URL}/request-otp`,
         {
           email,
           userData: get().tempUserData,
@@ -244,7 +244,7 @@ export const useStore = create((set, get) => ({
   handleLogin: async (credentials) => {
     set({ isLoading: true, error: null });
     try {
-      const response = await axios.post(`${API_BASE_URL}/login`, credentials, {
+      const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/login`, credentials, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -285,7 +285,7 @@ export const useStore = create((set, get) => ({
     set({ isLoading: true, error: null });
 
     try {
-      const response = await fetch(`${API_BASE_URL}/submit-feedback`, {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/submit-feedback`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -322,7 +322,7 @@ export const useStore = create((set, get) => ({
       const formData = createFormData(file);
 
       const response = await axios.put(
-        `${API_BASE_URL}/user/profile-image`,
+        `${import.meta.env.VITE_API_BASE_URL}/user/profile-image`,
         formData,
         {
           headers: {
@@ -347,7 +347,7 @@ export const useStore = create((set, get) => ({
 
   fetchUserImage: async () => {
     try {
-      const response = await axios.get(`${API_BASE_URL}/user/profile-image`, {
+      const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/user/profile-image`, {
         headers: {
           Authorization: `Bearer ${getAuthToken()}`
         }

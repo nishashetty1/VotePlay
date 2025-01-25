@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef} from "react";
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
@@ -15,6 +15,7 @@ const ThankYou = () => {
   const submitFeedback = useStore((state) => state.submitFeedback);
   const feedbackSubmitted = useStore((state) => state.feedbackSubmitted);
   const navigate = useNavigate();
+  const audioRef = useRef(new Audio("/assets/sound/ipl_tune.mp3"));
 
   const isVoting = useStore((state) => state.isVoting);
   const setIsVoting = useStore((state) => state.setIsVoting);
@@ -72,10 +73,12 @@ const ThankYou = () => {
     try {
       const success = await submitFeedback(rating, data.feedback);
       if (success) {
-        setIsVoting(false);
+        audioRef.current.play();
+
         setTimeout(() => {
+          setIsVoting(false);
           navigate("/dashboard", { replace: true });
-        }, 1000);
+        }, 4000);
       }
     } catch (error) {
       console.error("Error submitting feedback:", error);

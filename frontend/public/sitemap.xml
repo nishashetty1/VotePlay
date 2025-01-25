@@ -48,3 +48,13 @@
     <priority>0.2</priority>
   </url>
 </urlset>
+
+<!-- Contact and TnC -->
+<url>
+  <loc>https://www.voteplay.tech/contact</loc>
+  <priority>0.5</priority>
+</url>
+<url>
+  <loc>https://www.voteplay.tech/terms-and-conditions</loc>
+  <priority>0.5</priority>
+</url>

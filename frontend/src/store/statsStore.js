@@ -1,8 +1,6 @@
 import { create } from "zustand";
 import { getAuthToken } from "../utils/auth";
 
-const API_BASE_URL = "https://voteplay-backend.onrender.com/api";
-
 export const useStatsStore = create((set) => ({
   userVotes: 0,
   totalVotes: 0,
@@ -17,7 +15,7 @@ export const useStatsStore = create((set) => ({
     set({ isLoading: true });
 
     try {
-      const response = await fetch(`${API_BASE_URL}/stats`, {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/stats`, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",

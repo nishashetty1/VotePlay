@@ -16,7 +16,8 @@ const app = express();
 const allowedOrigins = [
   'https://voteplay.tech',
   'https://www.voteplay.tech',
-  'https://voteplay-frontend.onrender.com'
+  'https://voteplay-frontend.onrender.com',
+  'http://localhost:5173',
 ];
 
 // Middleware for handling CORS
@@ -47,29 +48,51 @@ app.use("/api", feedbackRouter);
 app.use("/api", paymentRouter);
 app.use("/api", certificateRouter);
 
-// Error handling middleware
-app.use((err, req, res, next) => {
-  res.status(500).json({
-    success: false,
-    message: err.message || "Something went wrong!",
-  });
-});
+// // Error handling middleware
+// app.use((err, req, res, next) => {
+//   res.status(500).json({
+//     success: false,
+//     message: err.message || "Something went wrong!",
+//   });
+// });
 
-// 404 handler
-app.use((req, res) => {
-  res.status(404).json({
-    success: false,
-    message: "Route not found",
-  });
-});
+// app.use((err, req, res, next) => {
+//   console.error('Error:', err);
+//   res.status(500).json({
+//     success: false,
+//     message: err.message || "Internal server error"
+//   });
+// });
 
-// Increase payload limit for JSON and URL-encoded data
-app.use(express.json({ limit: '50mb' }));
-app.use(express.urlencoded({ 
-  limit: '50mb',
-  extended: true,
-  parameterLimit: 50000
-}));
+// // Add this to your app.js for debugging
+// app.get('/api/routes', (req, res) => {
+//   const routes = [];
+//   app._router.stack.forEach((middleware) => {
+//     if (middleware.route) {
+//       routes.push({
+//         path: middleware.route.path,
+//         methods: Object.keys(middleware.route.methods)
+//       });
+//     }
+//   });
+//   res.json(routes);
+// });
+
+// // 404 handler
+// app.use((req, res) => {
+//   res.status(404).json({
+//     success: false,
+//     message: "Route not found",
+//   });
+// });
+
+// // Increase payload limit for JSON and URL-encoded data
+// app.use(express.json({ limit: '50mb' }));
+// app.use(express.urlencoded({ 
+//   limit: '50mb',
+//   extended: true,
+//   parameterLimit: 50000
+// }));
 
 
 // Connect to MongoDB
@@ -89,5 +112,5 @@ mongoose
 
 const PORT = 5000;
 app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+  console.log(`Server running ${PORT}`);
 });

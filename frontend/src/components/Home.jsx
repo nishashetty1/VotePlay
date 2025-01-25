@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { FunFact, LogoutButton, SEO } from '.'
 import { isAuthenticated } from '../utils/auth'
-import { Helmet } from 'react-helmet-async';
 
 const Home = () => {
 
