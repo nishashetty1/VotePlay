@@ -36,8 +36,8 @@ router.post("/payment/create-order", verifyToken, async (req, res) => {
         customer_phone: user.phone || "9999999999"
       },
       order_meta: {
-        return_url: `http://localhost:5173/payment-status?order_id=${orderId}&credits=${credits}`,
-        notify_url: `http://localhost:5000/api/payment/webhook`
+        return_url: `https://voteplay.tech/payment-status?order_id=${orderId}&credits=${credits}`,
+        notify_url: `https://voteplay-backend.onrender.com/api/payment/webhook`
       },
       order_note: `Credits: ${credits}`
     };
