@@ -65,6 +65,7 @@ npm install
 ```
 4. Set up environment variables
 ```bash
+#Backend (.env):
 MONGO_URI=your_mongodb_uri
 JWT_SECRET=your_jwt_secret
 EMAIL_USER=your_email
@@ -73,4 +74,24 @@ CLOUDINARY_API_KEY=your_cloudinary_key
 CLOUDINARY_API_SECRET=your_cloudinary_secret
 CLOUDINARY_CLOUD_NAME=your_cloud_name
 ```
-5. 
+```bash
+#Frontend (.env):
+VITE_API_BASE_URL=http://localhost:5000/api
+```
+5. Start the development servers
+```bash
+#Backend
+npm run dev
+```
+```bash
+#Frontend
+npm run dev
+```
+### 👥 Authors
+
+- [Nisha Shetty](https://github.com/nishashetty1)
+- [Adarsh Nambiar](https://github.com/adarshnambiar12)
+
+### Acknowledgments
+- Election Commission of India
+- IPL for team information
