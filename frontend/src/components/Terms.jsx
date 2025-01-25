@@ -45,14 +45,14 @@ const Terms = () => {
             Terms & Conditions
           </h1>
           <p className='text-text-secondary text-sm mb-6'>
-            Last updated on 25-01-2025 16:00:30
+            Last updated on 25-01-2025 21:15:51
           </p>
 
           <div className='space-y-4 text-text-primary'>
             <p>
               These Terms and Conditions, along with privacy policy or other
               terms ("Terms") constitute a binding agreement by and between
-              ADARSH RAJAN NAMBIAR, ("Website Owner" or "we" or "us" or "our")
+              NISHA NAGRAJ SHETTY, ("Website Owner" or "we" or "us" or "our")
               and you ("you" or "your") and relate to your use of our website,
               goods (as applicable) or services (as applicable) (collectively,
               "Services").
@@ -84,7 +84,10 @@ const Terms = () => {
                 guarantee as to the accuracy, timeliness, performance,
                 completeness or suitability of the information and materials
                 offered on this website or through the Services, for any
-                specific purpose.
+                specific purpose. You acknowledge that such information and
+                materials may contain inaccuracies or errors and we expressly
+                exclude liability for any such inaccuracies or errors to the
+                fullest extent permitted by law.
               </li>
 
               <li>
@@ -126,26 +129,28 @@ const Terms = () => {
 
             <div className='space-y-4'>
               <p>
-                <strong>Transactions and Refunds:</strong>
-              </p>
-              <p>
                 You understand that upon initiating a transaction for availing
                 the Services you are entering into a legally binding and
-                enforceable contract with us for the Services.
+                enforceable contract with the us for the Services.
               </p>
               <p>
                 You shall be entitled to claim a refund of the payment made by
                 you in case we are not able to provide the Service. The
                 timelines for such return and refund will be according to the
                 specific Service you have availed or within the time period
-                provided in our policies (as applicable).
+                provided in our policies (as applicable). In case you do not
+                raise a refund claim within the stipulated time, than this would
+                make you ineligible for a refund.
+              </p>
+              <p>
+                Notwithstanding anything contained in these Terms, the parties
+                shall not be liable for any failure to perform an obligation
+                under these Terms if performance is prevented or delayed by a
+                force majeure event.
               </p>
             </div>
 
             <div className='space-y-4'>
-              <p>
-                <strong>Legal Jurisdiction:</strong>
-              </p>
               <p>
                 These Terms and any dispute or claim relating to it, or its
                 enforceability, shall be governed by and construed in accordance
@@ -154,7 +159,7 @@ const Terms = () => {
               <p>
                 All disputes arising out of or in connection with these Terms
                 shall be subject to the exclusive jurisdiction of the courts in
-                Mumbai, Maharashtra.
+                Mumbai, Maharashtra
               </p>
             </div>
 
