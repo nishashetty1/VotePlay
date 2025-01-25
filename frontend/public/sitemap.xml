@@ -2,19 +2,19 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <!-- Home Page -->
   <url>
-    <loc>https://voteplay.tech/</loc>
+    <loc>https://www.voteplay.tech/</loc>
     <priority>1.0</priority>
   </url>
 
   <!-- Login Page -->
   <url>
-    <loc>https://voteplay.tech/login</loc>
+    <loc>https://www.voteplay.tech/login</loc>
     <priority>0.8</priority>
   </url>
 
   <!-- Sign Up Page -->
   <url>
-    <loc>https://voteplay.tech/signup</loc>
+    <loc>https://www.voteplay.tech/signup</loc>
     <priority>0.8</priority>
   </url>
 
