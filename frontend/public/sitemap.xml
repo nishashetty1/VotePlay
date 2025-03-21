@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Home Page -->
+  <url>
+    <loc>https://www.voteplay.tech/</loc>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- Login Page -->
+  <url>
+    <loc>https://www.voteplay.tech/login</loc>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Sign Up Page -->
+  <url>
+    <loc>https://www.voteplay.tech/signup</loc>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Video Page (Protected) -->
+  <url>
+    <loc>https://voteplay.tech/video</loc>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Dashboard Page (Protected) -->
+  <url>
+    <loc>https://voteplay.tech/dashboard</loc>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- Categories Page (Protected) -->
+  <url>
+    <loc>https://voteplay.tech/categories</loc>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- Vote Now Page (Protected) -->
+  <url>
+    <loc>https://voteplay.tech/votenow</loc>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- Thank You Page (Protected) -->
+  <url>
+    <loc>https://voteplay.tech/thank-you</loc>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- Not Found Page -->
+  <url>
+    <loc>https://voteplay.tech/404</loc>
+    <priority>0.2</priority>
+  </url>
+</urlset>
+
+<!-- Contact and TnC -->
+<url>
+  <loc>https://www.voteplay.tech/contact</loc>
+  <priority>0.5</priority>
+</url>
+<url>
+  <loc>https://www.voteplay.tech/terms-and-conditions</loc>
+  <priority>0.5</priority>
+</url>
